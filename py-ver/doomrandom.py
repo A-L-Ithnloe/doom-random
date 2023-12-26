@@ -1,10 +1,11 @@
-# Doom Randomizer v1.1
+# Doom Randomizer v1.11
 # Personal Project focused on creating a customizable randomizer for Doom
 
 import os, pickle, random
 import tkinter as tk
 from tkinter import ttk
 from tkinter.messagebox import askyesno
+from sys import exit
 
 FONT = ("Fixedsys", 16)
 
