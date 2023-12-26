@@ -1,4 +1,4 @@
-# Doom Randomizer v1.02
+# Doom Randomizer v1.1
 # Personal Project focused on creating a customizable randomizer for Doom
 
 import os, pickle, random
@@ -71,7 +71,7 @@ class MainFrame(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         label = ttk.Label(self, text = "Welcome to Doom Randomizer!", font = FONT)  # Creates text
-        label.grid(row = 0, column = 2, padx = 10, pady = 10)
+        label.place(relx = 0.5, rely = 0.05, anchor = "center")
         
         def randomize():
             result = ""
@@ -99,7 +99,7 @@ class MainFrame(tk.Frame):
                 resultField.insert(1.0, "Download list is empty! Result unavailable.")
             else:
                 resultField.insert(1.0, "Wait, what just happened? There maybe be an error in the code.")
-            resultField.configure(state="disabled")
+            resultField.configure(state = "disabled")
 
         def confirmExit():
             answer = askyesno(title = 'Confirmation',
@@ -114,45 +114,35 @@ class MainFrame(tk.Frame):
                 exit()
 
         buttonWAD = ttk.Button(self, text = "WADs", command = lambda : controller.showFrame(WADs))
-        buttonWAD.grid(row = 1, column = 1, padx = 10, pady = 10)
+        buttonWAD.place(relx = 0.02, rely = 0.2, relwidth = 0.25, relheight = 0.1, anchor = "w")
 
         buttonPlay = ttk.Button(self, text = "Playstyle", command = lambda : controller.showFrame(Playstyle))
-        buttonPlay.grid(row = 1, column = 2, padx = 20, pady = 10)
+        buttonPlay.place(relx = 0.5, rely = 0.2, relwidth = 0.25, relheight = 0.1, anchor = "center")
 
         buttonLoad = ttk.Button(self, text = "Loadout", command = lambda : controller.showFrame(Loadout))
-        buttonLoad.grid(row = 1, column = 3, padx = 30, pady = 10)
+        buttonLoad.place(relx = 0.98, rely = 0.2, relwidth = 0.25, relheight = 0.1, anchor = "e")
 
-        buttonDownload = ttk.Button(self, text="Download WADs", command = lambda: controller.showFrame(DownloadWADs))
-        buttonDownload.grid(row=2, column=3, pady=10)
+        buttonDownload = ttk.Button(self, text = "Download WADs", command = lambda: controller.showFrame(DownloadWADs))
+        buttonDownload.place(relx = 0.02, rely = 0.4, relwidth = 0.25, relheight = 0.1, anchor = "w")
 
         buttonRandom = ttk.Button(self, text = "RANDOMIZE", command = lambda : randomize())
-        buttonRandom.grid(row = 2, column = 1, padx = 20, pady = 10)
+        buttonRandom.place(relx = 0.5, rely = 0.4, relwidth = 0.25, relheight = 0.1, anchor = "center")
         
         buttonChooseDownload = ttk.Button(self, text = "DOWNLOAD", command = lambda : download())
-        buttonChooseDownload.grid(row = 2, column = 2, pady = 10)
+        buttonChooseDownload.place(relx = 0.98, rely = 0.4, relwidth = 0.25, relheight = 0.1, anchor = "e")
 
         resultField = tk.Text(self, width = 40, height = 5, state = 'disabled', wrap = "word")
-        resultField.grid(row = 3, column = 2, padx = 10, pady = 10)
+        resultField.place(relx = 0.5, rely = 0.65, relwidth = 0.6, relheight = 0.25, anchor = "center")
         
         buttonExit = ttk.Button(self, text = "Exit", command = lambda : confirmExit())
-        buttonExit.grid(row = 3, column = 3)
-
+        buttonExit.place(relx = 0.05, rely = 0.9, relwidth = 0.15, relheight = 0.1, anchor = "w")
 
 class WADs(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = ttk.Label(self, text = "List of WADs", font = FONT)
-        label.place(x = 220, y = 10)
-            
-        buttonBack = ttk.Button(self, text = "Back", command = lambda : controller.showFrame(MainFrame))
-        buttonBack.place(x = 10, y = 54)
-        
-        inputField = tk.Text(self, width = 20, height = 5)
-        inputField.place(x = 25, y = 100)
 
-        listField = tk.Listbox(self, width = 27, height = 5, selectmode = "multiple")
-        listField.place(x = 380, y = 100)
-        listField.insert("end", *WADList)
+        label = ttk.Label(self, text = "List of WADs", font = FONT)
+        label.place(relx = 0.5, rely = 0.05, anchor = "center")
 
         def addWAD():
             moveList = []
@@ -178,22 +168,33 @@ class WADs(tk.Frame):
             if answer is True:
                 WADList.clear()
                 listField.delete("0", "end")
+
+        buttonBack = ttk.Button(self, text = "Back", command = lambda : controller.showFrame(MainFrame))
+        buttonBack.place(relx = 0.05, rely = 0.3, relwidth = 0.2, relheight = 0.1)
+        
+        inputField = tk.Text(self, width = 20, height = 5)
+        inputField.place(relx = 0.05, rely = 0.45, relwidth = 0.3, relheight = 0.4)
+
+        listField = tk.Listbox(self, width = 25, height = 5, selectmode = "multiple")
+        listField.place(relx = 0.65, rely = 0.43, relwidth = 0.32, relheight = 0.5)
+        listField.insert("end", *WADList)
         
         buttonAdd = ttk.Button(self, text = "Add WAD", command = lambda : addWAD())
-        buttonAdd.place(x = 245, y = 100)
+        buttonAdd.place(relx = 0.5, rely = 0.5, relwidth = 0.25, relheight = 0.1, anchor = "center")
         
         buttonRemove = ttk.Button(self, text = "Delete WAD", command = lambda : deleteWAD())
-        buttonRemove.place(x = 245, y = 125)
+        buttonRemove.place(relx = 0.5, rely = 0.61, relwidth = 0.25, relheight = 0.1, anchor = "center")
         
         buttonDelete = ttk.Button(self, text = "Delete All", command = lambda : deleteAllWADs())
-        buttonDelete.place(x = 245, y = 150)
+        buttonDelete.place(relx = 0.5, rely = 0.72, relwidth = 0.25, relheight = 0.1, anchor = "center")
         
 
 class Playstyle(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+
         label = ttk.Label(self, text = "List of Playstyles", font = FONT)
-        label.place(x = 190, y = 10)
+        label.place(relx = 0.5, rely = 0.05, anchor = "center")
         
         def addPlaystyle():
             moveList = []
@@ -221,30 +222,31 @@ class Playstyle(tk.Frame):
                 listField.delete("0", "end")
 
         buttonBack = ttk.Button(self, text = "Back", command = lambda : controller.showFrame(MainFrame))
-        buttonBack.place(x = 10, y = 54)
+        buttonBack.place(relx = 0.05, rely = 0.3, relwidth = 0.2, relheight = 0.1)
 
         inputField = tk.Text(self, width = 20, height = 5)
-        inputField.place(x = 25, y = 100)
+        inputField.place(relx = 0.05, rely = 0.45, relwidth = 0.3, relheight = 0.4)
 
-        listField = tk.Listbox(self, width = 27, height = 5, selectmode = "multiple")
-        listField.place(x = 380, y = 100)
+        listField = tk.Listbox(self, width = 25, height = 5, selectmode = "multiple")
+        listField.place(relx = 0.65, rely = 0.43, relwidth = 0.32, relheight = 0.5)
         listField.insert("end", *playstyleList)
         
         buttonAdd = ttk.Button(self, text = "Add Playstyle", command = lambda : addPlaystyle())
-        buttonAdd.place(x = 243, y = 100)
+        buttonAdd.place(relx = 0.5, rely = 0.5, relwidth = 0.25, relheight = 0.1, anchor = "center")
         
         buttonRemove = ttk.Button(self, text = "Delete Playstyle", command = lambda : deletePlaystyle())
-        buttonRemove.place(x = 238, y = 125)
+        buttonRemove.place(relx = 0.5, rely = 0.61, relwidth = 0.25, relheight = 0.1, anchor = "center")
         
         buttonDelete = ttk.Button(self, text = "Delete All", command = lambda : deleteAllPlaystyles())
-        buttonDelete.place(x = 245, y = 150)
+        buttonDelete.place(relx = 0.5, rely = 0.72, relwidth = 0.25, relheight = 0.1, anchor = "center")
 
 
 class Loadout(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+
         label = ttk.Label(self, text = "List of Loadouts", font = FONT)
-        label.place(x = 200, y = 10)
+        label.place(relx = 0.5, rely = 0.05, anchor = "center")
         
         def addLoadout():
             moveList = []
@@ -272,40 +274,31 @@ class Loadout(tk.Frame):
                 listField.delete("0", "end")
 
         buttonBack = ttk.Button(self, text = "Back", command = lambda : controller.showFrame(MainFrame))
-        buttonBack.place(x = 10, y = 54)
+        buttonBack.place(relx = 0.05, rely = 0.3, relwidth = 0.2, relheight = 0.1)
 
         inputField = tk.Text(self, width = 20, height = 5)
-        inputField.place(x = 25, y = 100)
+        inputField.place(relx = 0.05, rely = 0.45, relwidth = 0.3, relheight = 0.4)
 
         listField = tk.Listbox(self, width = 27, height = 5, selectmode = "multiple")
-        listField.place(x = 380, y = 100)
+        listField.place(relx = 0.65, rely = 0.43, relwidth = 0.32, relheight = 0.5)
         listField.insert("end", *loadoutList)
         
         buttonAdd = ttk.Button(self, text = "Add Loadout", command = lambda : addLoadout())
-        buttonAdd.place(x = 244, y = 100)
+        buttonAdd.place(relx = 0.5, rely = 0.5, relwidth = 0.25, relheight = 0.1, anchor = "center")
         
         buttonRemove = ttk.Button(self, text = "Delete Loadout", command = lambda : deleteLoadout())
-        buttonRemove.place(x = 239, y = 125)
+        buttonRemove.place(relx = 0.5, rely = 0.61, relwidth = 0.25, relheight = 0.1, anchor = "center")
         
         buttonDelete = ttk.Button(self, text = "Delete All", command = lambda : deleteAllLoadouts())
-        buttonDelete.place(x = 245, y = 150)
+        buttonDelete.place(relx = 0.5, rely = 0.72, relwidth = 0.25, relheight = 0.1, anchor = "center")
 
 
 class DownloadWADs(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+
         label = ttk.Label(self, text="List of WADs to Download", font=FONT)
-        label.place(x=220, y=10)
-
-        buttonBack = ttk.Button(self, text="Back", command = lambda : controller.showFrame(MainFrame))
-        buttonBack.place(x=10, y=54)
-
-        inputField = tk.Text(self, width=20, height=5)
-        inputField.place(x=25, y=100)
-
-        listField = tk.Listbox(self, width=27, height=5, selectmode="multiple")
-        listField.place(x=380, y=100)
-        listField.insert("end", *downloadList)
+        label.place(relx = 0.5, rely = 0.05, anchor = "center")
 
         def addDownload():
             moveList = []
@@ -331,17 +324,30 @@ class DownloadWADs(tk.Frame):
             if answer is True:
                 WADList.clear()
                 listField.delete("0", "end")
+        
+        buttonBack = ttk.Button(self, text="Back", command = lambda : controller.showFrame(MainFrame))
+        buttonBack.place(relx = 0.05, rely = 0.3, relwidth = 0.2, relheight = 0.1)
+
+        inputField = tk.Text(self, width = 20, height = 5)
+        inputField.place(relx = 0.05, rely = 0.45, relwidth = 0.3, relheight = 0.4)
+
+        listField = tk.Listbox(self, width = 27, height = 5, selectmode="multiple")
+        listField.place(relx = 0.65, rely = 0.43, relwidth = 0.32, relheight = 0.5)
+        listField.insert("end", *downloadList)
 
         buttonAdd = ttk.Button(self, text = "Add WAD", command = lambda : addDownload())
-        buttonAdd.place(x=245, y=100)
+        buttonAdd.place(relx = 0.5, rely = 0.5, relwidth = 0.25, relheight = 0.1, anchor = "center")
 
         buttonRemove = ttk.Button(self, text="Delete WAD", command = lambda : deleteDownload())
-        buttonRemove.place(x=245, y=125)
+        buttonRemove.place(relx = 0.5, rely = 0.61, relwidth = 0.25, relheight = 0.1, anchor = "center")
 
         buttonDelete = ttk.Button(self, text="Delete All", command = lambda : deleteAllDownloads())
-        buttonDelete.place(x=245, y=150)
+        buttonDelete.place(relx = 0.5, rely = 0.72, relwidth = 0.25, relheight = 0.1, anchor = "center")
 
 
 app = Application()
-app.resizable(False, False)
+screen_width = app.winfo_screenwidth()
+screen_height = app.winfo_screenheight()
+app.minsize(width = screen_width // 4, height = screen_height // 4)
+app.resizable(True, True)
 app.mainloop()
